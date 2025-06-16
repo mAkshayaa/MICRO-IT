@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Stopwatch</title>
+</head>
+<body>
+  <h1>Stopwatch</h1>
+  <p id="display">0.00 s</p>
+
+  <button onclick="start()">Start</button>
+  <button onclick="stop()">Stop</button>
+  <button onclick="reset()">Reset</button>
+
+  <script>
+    let startTime = 0, elapsed = 0, timer = null;
+
+    function update() {
+      const now = Date.now();
+      const time = ((now - startTime) + elapsed) / 1000;
+      document.getElementById('display').textContent = time.toFixed(2) + ' s';
+    }
+
+    function start() {
+      if (timer) return; // already running
+      startTime = Date.now();
+      timer = setInterval(update, 100);
+    }
+
+    function stop() {
+      if (!timer) return;
+      clearInterval(timer);
+      timer = null;
+      elapsed += Date.now() - startTime;
+    }
+
+    function reset() {
+      stop();
+      elapsed = 0;
+      document.getElementById('display').textContent = '0.00 s';
+    }
+  </script>
+</body>
+</html>
